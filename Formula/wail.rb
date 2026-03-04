@@ -13,6 +13,7 @@ class Wail < Formula
   homepage "https://github.com/quasor/WAIL"
   # url and sha256 are updated automatically by the release workflow
   url "https://github.com/quasor/WAIL/releases/download/v0.4.14/wail-0.4.14-src.tar.gz"
+  version "0.4.14"
   sha256 "ede8f3316b450b4410a74572de5f09c8c648659a82bc78f622cece3fd534dd9e"
   license "MIT"
   head "https://github.com/quasor/WAIL.git", branch: "main", submodules: true
