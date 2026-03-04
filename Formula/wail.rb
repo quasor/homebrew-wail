@@ -13,17 +13,27 @@ class Wail < Formula
   desc "Sync Ableton Link sessions across the internet with intervalic audio"
   homepage "https://github.com/quasor/WAIL"
   # url and sha256 are updated automatically by the release workflow
-  url "https://github.com/quasor/WAIL/releases/download/v0.4.10/wail-0.4.10-src.tar.gz"
-  sha256 "96552484e4034e6de0f841ab01f50d37256e0d6eee2a1aac7c9615d6e5c40ceb"
+  url "https://github.com/quasor/WAIL/releases/download/v0.4.11/wail-0.4.11-src.tar.gz"
+  sha256 "a1f35d7f04a08b164fe8832048164e772d15ed45b003ce2a9f8d9a493678c489"
   license "MIT"
   head "https://github.com/quasor/WAIL.git", branch: "main", submodules: true
 
   depends_on "cmake" => :build
+  depends_on "pkg-config" => :build
   depends_on "rust" => :build
   depends_on "opus"
   depends_on :macos # requires macOS WebKit (used by Tauri)
 
   def install
+    # Homebrew's superenv pkg-config shim references the legacy "pkg-config"
+    # opt path, but modern Homebrew provides it via "pkgconf". Point the Rust
+    # pkg-config crate directly to the real binary so audiopus_sys finds Opus.
+    ENV["PKG_CONFIG"] = Formula["pkgconf"].opt_bin/"pkg-config"
+
+    # CMake 4.x rejects old cmake_minimum_required() values in rusty_link's
+    # vendored Ableton Link SDK. This env var tells CMake to accept them.
+    ENV["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
+
     # Build the main app binary.
     # Note: this produces the raw wail-tauri binary, not a full .app bundle.
     # For the polished macOS .app, use the DMG from the Releases page instead.
