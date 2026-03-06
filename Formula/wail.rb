@@ -12,8 +12,8 @@ class Wail < Formula
   desc "Sync Ableton Link sessions across the internet with intervalic audio"
   homepage "https://github.com/MostDistant/WAIL"
   # url and sha256 are updated automatically by the release workflow
-  url "https://github.com/MostDistant/WAIL/releases/download/v1.2.0/wail-1.2.0-src.tar.gz"
-  sha256 "080379294f6440c5a3f6daee6baae4658ba36a7f0a726fa9006a3d41858fcf49"
+  url "https://github.com/MostDistant/WAIL/releases/download/v1.3.0/wail-1.3.0-src.tar.gz"
+  sha256 "2659d8bb490b89cea806f2c13120e68b5ff24866ab1f08fe498a02750cc67a40"
   license "MIT"
   head "https://github.com/MostDistant/WAIL.git", branch: "main", submodules: true
 
@@ -39,8 +39,12 @@ class Wail < Formula
     system "cargo", "build", "--release", "--package", "wail-tauri", "--locked"
     bin.install "target/release/wail-tauri" => "wail"
 
-    # Build and assemble CLAP/VST3 plugin bundles without requiring cargo-nih-plug.
-    system "cargo", "run", "--package", "xtask", "--release", "--locked", "--", "bundle-plugin"
+    # Build plugin libraries first (separate --locked invocations, no nested cargo).
+    system "cargo", "build", "--release", "--locked", "--package", "wail-plugin-send", "--lib"
+    system "cargo", "build", "--release", "--locked", "--package", "wail-plugin-recv", "--lib"
+
+    # Assemble CLAP/VST3 bundle directories from the pre-built dylibs (file ops only).
+    system "cargo", "run", "--package", "xtask", "--release", "--locked", "--", "bundle-plugin", "--no-build"
 
     # Install plugin bundles to #{lib}. Run `wail-install-plugins` afterwards
     # to copy them to ~/Library/Audio/Plug-Ins/.
