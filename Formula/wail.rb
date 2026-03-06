@@ -1,21 +1,21 @@
 # WAIL Homebrew Formula
 #
 # This file is the source of truth for the Homebrew formula.
-# It is copied automatically to the quasor/homebrew-wail tap on each release.
+# It is copied automatically to the MostDistant/homebrew-wail tap on each release.
 # The `url` and `sha256` fields below are updated by the release workflow.
 #
 # To install:
-#   brew tap quasor/wail
-#   brew install quasor/wail/wail
+#   brew tap MostDistant/wail
+#   brew install MostDistant/wail/wail
 
 class Wail < Formula
   desc "Sync Ableton Link sessions across the internet with intervalic audio"
-  homepage "https://github.com/quasor/WAIL"
+  homepage "https://github.com/MostDistant/WAIL"
   # url and sha256 are updated automatically by the release workflow
-  url "https://github.com/quasor/WAIL/releases/download/v0.4.17/wail-0.4.17-src.tar.gz"
-  sha256 "9c0df355bb2c5c89da7afdfc8b137fbba068a64a68ddaa4cc1241800bd5e9e89"
+  url "https://github.com/MostDistant/WAIL/releases/download/v1.1.0/wail-1.1.0-src.tar.gz"
+  sha256 "17206b6c6b67e5462b98f0d509dac8468aea5e5a11ab6601c71d728743386a60"
   license "MIT"
-  head "https://github.com/quasor/WAIL.git", branch: "main", submodules: true
+  head "https://github.com/MostDistant/WAIL.git", branch: "main", submodules: true
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
@@ -66,7 +66,7 @@ class Wail < Formula
 
       Note: `wail` launches the app binary directly. For the polished macOS .app
       bundle (dock icon, native menu bar), download the DMG from:
-        https://github.com/quasor/WAIL/releases
+        https://github.com/MostDistant/WAIL/releases
     EOS
   end
 
