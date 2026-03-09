@@ -13,7 +13,7 @@ class Wail < Formula
   homepage "https://github.com/MostDistant/WAIL"
   # url and sha256 are updated automatically by the release workflow
   url "https://github.com/MostDistant/WAIL/releases/download/v1.14.3/wail-1.14.3-src.tar.gz"
-  sha256 "20296697119bb64e798a3853409c202f53395353f8e1c068babf1dcc40c86811"
+  sha256 "54cf23a6c7ed12f11aa44c667400b5dad04e3dc74f6c49b56d2d2978108c993c"
   license "MIT"
   head "https://github.com/MostDistant/WAIL.git", branch: "main", submodules: true
 
