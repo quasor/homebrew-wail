@@ -12,8 +12,8 @@ class Wail < Formula
   desc "Sync Ableton Link sessions across the internet with intervalic audio"
   homepage "https://github.com/MostDistant/WAIL"
   # url and sha256 are updated automatically by the release workflow
-  url "https://github.com/MostDistant/WAIL/releases/download/v1.18.0/wail-1.18.0-src.tar.gz"
-  sha256 "3e2d764fb9c1c8863c41245746aae9f8858185bcfc87d95689c0245807b71c3a"
+  url "https://github.com/MostDistant/WAIL/releases/download/v1.18.1/wail-1.18.1-src.tar.gz"
+  sha256 "40f5597439f36dbd4ffbb73e5c6fc3a70b1564a651e0fadaa821f1b5425e2fb1"
   license "MIT"
   head "https://github.com/MostDistant/WAIL.git", branch: "main", submodules: true
 
@@ -37,7 +37,9 @@ class Wail < Formula
     # Note: this produces the raw wail-tauri binary, not a full .app bundle.
     # For the polished macOS .app, use the DMG from the Releases page instead.
     system "cargo", "build", "--release", "--package", "wail-tauri", "--locked"
+    system "cargo", "build", "--release", "--package", "wail-test-client", "--locked"
     bin.install "target/release/wail-tauri" => "wail"
+    bin.install "target/release/wail-test-client"
 
     # Build plugin libraries first (separate --locked invocations, no nested cargo).
     system "cargo", "build", "--release", "--locked", "--package", "wail-plugin-send", "--lib"
@@ -77,6 +79,7 @@ class Wail < Formula
   test do
     assert_predicate bin/"wail", :exist?
     assert_predicate bin/"wail-install-plugins", :exist?
+    assert_predicate bin/"wail-test-client", :exist?
     assert_predicate lib/"wail-plugin-send.clap", :exist?
     assert_predicate lib/"wail-plugin-recv.clap", :exist?
     assert_predicate lib/"wail-plugin-send.vst3", :exist?
